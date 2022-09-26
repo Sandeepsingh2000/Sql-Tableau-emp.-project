@@ -1,0 +1,418 @@
+-- Create database
+
+drop DATABASE IF EXISTS employees;
+CREATE DATABASE IF NOT EXISTS employees; 
+USE employees;
+
+-- Create tables
+
+CREATE TABLE employees (
+    emp_no      INT             NOT NULL,
+    birth_date  DATE            NOT NULL,
+    first_name  VARCHAR(14)     NOT NULL,
+    last_name   VARCHAR(16)     NOT NULL,
+    gender      ENUM ('M','F')  NOT NULL,    
+    hire_date   DATE            NOT NULL,
+    PRIMARY KEY (emp_no)
+);
+
+CREATE TABLE departments (
+    dept_no     CHAR(4)         NOT NULL,
+    dept_name   VARCHAR(40)     NOT NULL,
+    PRIMARY KEY (dept_no),
+    UNIQUE  KEY (dept_name)
+);
+
+CREATE TABLE dept_manager (
+   emp_no       INT             NOT NULL,
+   dept_no      CHAR(4)         NOT NULL,
+   from_date    DATE            NOT NULL,
+   to_date      DATE            NOT NULL,
+   FOREIGN KEY (emp_no)  REFERENCES employees (emp_no),
+   FOREIGN KEY (dept_no) REFERENCES departments (dept_no),
+   PRIMARY KEY (emp_no)
+); 
+
+CREATE TABLE dept_emp (
+    emp_no      INT             NOT NULL,
+    dept_no     CHAR(4)         NOT NULL,
+    from_date   DATE            NOT NULL,
+    to_date     DATE            NOT NULL,
+    FOREIGN KEY (emp_no)  REFERENCES employees   (emp_no),
+    FOREIGN KEY (dept_no) REFERENCES departments (dept_no),
+    PRIMARY KEY (emp_no)
+);
+
+CREATE TABLE salaries (
+    emp_no      INT             NOT NULL,
+    salary      INT             NOT NULL,
+    from_date   DATE            NOT NULL,
+    to_date     DATE            NOT NULL,
+    FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
+    PRIMARY KEY (emp_no)
+); 
+
+
+
+
+-- Insert values
+
+INSERT INTO employees(emp_no,birth_date,first_name,last_name,gender,hire_date)
+VALUES
+(1,'1958-02-19','Saniya','Kalloufi','M','1994-09-15'),
+(2,'1953-11-07','Mary','Sluis','F','1990-01-22'),
+(3,'1960-10-04','Patricio','Bridgland','M','1992-12-18'),
+(4,'1961-05-02','Kazuhito','Cappelletti','M','1995-01-27'),
+(5,'1958-07-06','Cristinel','Bouloucos','F','1993-08-03'),
+(6,'1953-01-23','Lillian','Haddadi','M','1999-04-30'),
+(7,'1952-12-24','Mayuko','Warwick','M','1991-01-26'),
+(8,'1952-07-08','Shahaf','Famili','M','1995-08-22'),
+(9,'1958-09-05','Suzette','Pettey','F','1997-05-19'),
+(10,'1953-04-03','Yongqiao','Berztiss','M','1995-03-20'),
+(11,'1963-11-26','Domenick','Tempesti','M','1991-10-22'),
+(12,'1958-07-14','Elvis','Demeyer','M','1994-02-17'),
+(13,'1959-01-27','Karsten','Joslin','M','1991-09-01'),
+(14,'1960-08-09','Jeong','Reistad','F','1990-06-20'),
+(15,'1959-08-10','Adamantios','Portugali','M','1992-01-03'),
+(16,'1963-07-22','Pradeep','Makrucki','M','1990-12-05'),
+(17,'1959-09-13','Weiyi','Meriste','F','1993-02-14'),
+(18,'1956-02-26','Magy','Stamatiou','F','1993-03-21'),
+(19,'1960-09-19','Yishay','Tzvieli','M','1990-10-20'),
+(20,'1961-09-21','Mingsen','Casley','F','1994-05-21'),
+(21,'1960-07-23','Lucien','Rosenbaum','M','1992-06-20'),
+(22,'1961-04-24','Basil','Tramer','F','1992-05-04'),
+(23,'1958-05-21','Yinghua','Dredge','M','1990-12-25'),
+(24,'1953-07-28','Hidefumi','Caine','M','1992-10-15'),
+(25,'1957-04-04','Mayumi','Schueller','M','1995-03-13'),
+(26,'1956-06-06','Georgy','Dredge','M','1992-04-27'),
+(27,'1961-09-01','Brendon','Bernini','F','1990-02-01'),
+(28,'1954-05-30','Ebbe','Callaway','F','1992-01-15'),
+(29,'1953-09-19','Alejandro','McAlpine','F','1991-06-26'),
+(30,'1961-11-02','Anoosh','Peyn','M','1991-08-30'),
+(31,'1954-02-23','Shir','McClurg','M','1991-12-01'),
+(32,'1955-08-28','Mokhtar','Bernatsky','F','1990-08-13'),
+(33,'1964-04-18','Mona','Azuma','M','1990-03-02'),
+(34,'1963-09-09','Parviz','Lortz','M','1990-01-03'),
+(35,'1960-05-25','Tuval','Kalloufi','M','1995-12-15'),
+(36,'1962-11-07','Kenroku','Malabarba','M','1994-04-09'),
+(37,'1962-11-19','Somnath','Foote','M','1990-02-16'),
+(38,'1955-10-04','Amabile','Gomatam','M','1992-11-18'),
+(39,'1964-06-11','Sailaja','Desikan','M','1996-11-05'),
+(40,'1954-09-16','Jayson','Mandell','M','1990-01-14'),
+(41,'1952-02-27','Remzi','Waschkowski','M','1990-09-15'),
+(42,'1952-04-15','Perla','Heyers','F','1992-12-28'),
+(43,'1959-11-04','Paraskevi','Luby','F','1994-01-26'),
+(44,'1962-02-05','Hironoby','Piveteau','M','1999-03-23'),
+(45,'1952-08-29','Eben','Aingworth','M','1990-12-19'),
+(46,'1956-06-13','Dung','Baca','F','1994-03-22'),
+(47,'1958-11-25','Mariusz','Prampolini','F','1993-06-16'),
+(48,'1957-02-16','Munir','Demeyer','F','1992-07-17'),
+(49,'1961-10-24','Kiyotoshi','Blokdijk','F','1990-05-28'),
+(50,'1957-03-29','Zhonghui','Zyda','F','1990-09-13');
+
+
+
+
+
+
+INSERT INTO departments(dept_no,dept_name) 
+VALUES 
+('d001','Marketing'), 
+('d002','Finance'), 
+('d003','Human Resources'), 
+('d004','Production'); 
+
+
+
+
+
+
+
+INSERT INTO dept_manager(emp_no,dept_no,from_date,to_date) 
+VALUES 
+(1,'d001','1995-12-30','1998-12-29'),
+(13,'d003','1997-04-09','9999-01-01'),
+(20,'d002','1991-12-31','1997-12-29'),
+(24,'d004','1993-08-02','1998-08-01'),
+(27,'d001','1993-12-30','2000-12-28'),
+(31,'d002','1992-11-20','1997-11-19'),
+(36,'d001','1995-10-13','2000-10-11'),
+(39,'d001','1995-02-04','9999-01-01'),
+(42,'d001','1996-12-29','2002-12-28'),
+(47,'d002','1993-01-06','1999-01-05'),
+(48,'d001','1994-08-10','1999-08-09');
+
+
+
+
+
+
+
+
+INSERT INTO dept_emp(emp_no,dept_no,from_date,to_date) 
+VALUES 
+(2,'d002','1986-06-26','9999-01-01'),
+(3,'d001','1996-08-03','9999-01-01'),
+(4,'d004','1995-12-03','9999-01-01'),
+(5,'d004','1986-12-01','9999-01-01'),
+(6,'d003','1989-09-12','9999-01-01'),
+(7,'d003','1990-08-05','9999-01-01'),
+(8,'d004','1989-02-10','9999-01-01'),
+(9,'d001','1998-03-11','2000-07-31'),
+(10,'d002','1985-02-18','9999-01-01'),
+(11,'d004','1996-11-24','2000-06-26'),
+(12,'d001','2000-06-26','9999-01-01'),
+(14,'d004','1990-01-22','1996-11-09'),
+(15,'d003','1992-12-18','9999-01-01'),
+(16,'d003','1985-10-20','9999-01-01'),
+(17,'d004','1993-12-29','9999-01-01'),
+(18,'d004','1992-09-19','1993-08-22'),
+(19,'d002','1998-02-11','9999-01-01'),
+(21,'d001','1993-08-03','9999-01-01'),
+(22,'d004','1992-07-29','9999-01-01'),
+(23,'d001','1987-04-03','1992-07-29'),
+(25,'d003','1999-04-30','9999-01-01'),
+(26,'d004','1997-12-30','9999-01-01'),
+(28,'d002','1988-02-10','2002-07-15'),
+(30,'d002','1999-09-03','9999-01-01'),
+(32,'d002','1999-09-27','9999-01-01'),
+(33,'d004','1998-06-14','9999-01-01'),
+(34,'d003','1987-08-17','1997-10-15'),
+(35,'d004','1995-03-20','9999-01-01'),
+(37,'d003','1995-04-02','9999-01-01'),
+(38,'d003','1991-10-22','1998-04-06'),
+(40,'d003','1991-09-18','1999-07-08'),
+(41,'d003','1999-07-08','9999-01-01'),
+(43,'d004','1994-02-17','9999-01-01'),
+(44,'d003','1991-09-01','9999-01-01'),
+(45,'d004','1990-06-20','9999-01-01'),
+(46,'d003','1987-03-18','1993-03-24'),
+(49,'d003','1995-04-12','1999-10-31'),
+(50,'d004','1988-09-05','9999-01-01'),
+(1,'d001','1995-12-30','1998-12-29'),
+(13,'d003','1997-04-09','9999-01-01'),
+(20,'d002','1991-12-31','1997-12-29'),
+(24,'d004','1993-08-02','1998-08-01'),
+(27,'d001','1993-12-30','2000-12-28'),
+(31,'d002','1992-11-20','1997-11-19'),
+(36,'d001','1995-10-13','2000-10-11'),
+(39,'d001','1995-02-04','9999-01-01'),
+(42,'d001','1996-12-29','2002-12-28'),
+(47,'d002','1993-01-06','1999-01-05'),
+(48,'d001','1994-08-10','1999-08-09');
+
+
+
+
+
+
+
+
+INSERT INTO salaries(emp_no, salary, from_date, to_date) 
+VALUES
+(1, 59461, '1990-06-25', '1991-06-25'),
+(2, 59461, '1990-06-25', '1991-06-25'),
+(3, 63546, '1991-06-25', '1992-06-24'),
+(4, 66833, '1992-06-24', '1993-06-24'),
+(5, 67786, '1993-06-24', '1994-06-24'),
+(6, 71494, '1994-06-24', '1995-06-24'),
+(7, 72384, '1995-06-24', '1996-06-23'),
+(8, 75513, '1996-06-23', '1997-06-23'),
+(9, 76525, '1997-06-23', '1998-06-23'),
+(10, 74597, '1998-06-23', '1999-06-23'),
+(11, 78417, '1999-06-23', '2000-06-22'),
+(12, 82612, '2000-06-22', '2001-06-22'),
+(13, 82597, '2001-06-22', '2002-06-22'),
+(14, 86458, '2002-06-22', '9999-01-01'),
+(15, 58328, '1996-08-03', '1997-08-03'),
+(16, 58409, '1997-08-03', '1998-08-03'),
+(17, 60034, '1998-08-03', '1999-08-03'),
+(18, 61866, '1999-08-03', '2000-08-02'),
+(19, 64463, '2000-08-02', '2001-08-02'),
+(20, 65027, '2001-08-02', '9999-01-01'),
+(21, 35506, '1995-12-03', '1996-12-02'),
+(22, 39116, '1996-12-02', '1997-12-02'),
+(23, 38966, '1997-12-02', '1998-12-02'),
+(24, 37136, '1998-12-02', '1999-12-02'),
+(25, 36978, '1999-12-02', '2000-12-01'),
+(26, 41199, '2000-12-01', '2001-12-01'),
+(27, 40811, '2001-12-01', '9999-01-01'),
+(28, 40771, '1990-11-30', '1991-11-30'),
+(29, 43094, '1991-11-30', '1992-11-29'),
+(30, 44619, '1992-11-29', '1993-11-29'),
+(31, 47193, '1993-11-29', '1994-11-29'),
+(32, 53826, '1994-11-29', '1995-11-29'),
+(33, 56270, '1995-11-29', '1996-11-28'),
+(34, 58066, '1996-11-28', '1997-11-28'),
+(35, 59840, '1997-11-28', '1998-11-28'),
+(36, 60596, '1998-11-28', '1999-11-28'),
+(37, 63222, '1999-11-28', '2000-11-27'),
+(38, 68198, '2000-11-27', '2001-11-27'),
+(39, 71557, '2001-11-27', '9999-01-01'),
+(40, 75121, '1990-09-12', '1991-09-12'),
+(41, 76235, '1991-09-12', '1992-09-11'),
+(42, 78072, '1992-09-11', '1993-09-11'),
+(43, 77576, '1993-09-11', '1994-09-11'),
+(44, 81550, '1994-09-11', '1995-09-11'),
+(45, 83948, '1995-09-11', '1996-09-10'),
+(46, 83563, '1996-09-10', '1997-09-10'),
+(47, 85224, '1997-09-10', '1998-09-10'),
+(48, 83892, '1998-09-10', '1999-09-10'),
+(49, 84031, '1999-09-10', '2000-09-09'),
+(50, 88953, '2000-09-09', '2001-09-09');
+
+
+
+
+-- select statement----
+-- ----------------------
+
+
+-- total employee
+SELECT count(*)   FROM employees;
+
+-- total male employee
+SELECT count(*)   FROM employees where gender = "M";
+
+-- total female employee
+SELECT count(*)   FROM employees where gender = "F";
+
+-- first name start with a
+SELECT *   FROM employees   WHERE first_name LIKE 'a%';
+
+-- female and first name start from a to d
+SELECT *   FROM employees   WHERE gender ="F" and first_name regexp "^[a-d]";
+
+-- employee with hiring year 1999
+SELECT *  FROM employees    WHERE YEAR(hire_date) = '1999'; 
+
+-- Name of employee whose salary between 66000 to 70000
+SELECT e.first_name,e.last_name       from employees e inner join  salaries s     
+on e.emp_no = s.emp_no
+where s.salary BETWEEN 66000 AND 70000;
+
+-- female with hire year >=2000
+SELECT * FROM employees  WHERE gender ="F" and YEAR(hire_date) >= 2000;
+
+-- obatin diferent hiring year
+SELECT DISTINCT year(hire_date)  FROM employees   order by  year(hire_date);
+
+-- no of employee with salary employee>=10000
+SELECT COUNT(salary)
+FROM salaries
+WHERE salary >= 10000;
+
+-- Select the first 20 data raw from dept_emp
+SELECT *  FROM dept_emp  LIMIT 10;
+
+-- total amount of money spent on salaries after the 1st of January 1997
+SELECT SUM(salary)   FROM salaries   WHERE from_date >= '1995-01-01';
+
+-- min. salry of employee
+SELECT e.emp_no, e.first_name, e.last_name, min(s.salary)     from employees e inner join salaries s 
+on e.emp_no = s.emp_no;
+ 
+
+-- max. salry of employee
+SELECT e.emp_no, e.first_name, e.last_name, max(s.salary)     from employees e inner join salaries s 
+on e.emp_no = s.emp_no;
+
+
+-- avg salary
+SELECT AVG(salary) FROM salaries;
+
+
+-- Select all managers’ first and last name, hire date, job title, start date, and department name.
+SELECT e.first_name,e.last_name,e.hire_date,t.title,de.from_date, d.dept_name
+FROM employees e
+JOIN titles t ON t.emp_no = e.emp_no
+JOIN dept_emp de ON de.emp_no = e.emp_no
+JOIN departments d ON d.dept_no = de.dept_no
+WHERE t.title = 'Manager'
+ORDER BY e.emp_no;
+
+-- How many male and female managers are there
+SELECT e.gender, COUNT(e.gender)           FROM employees e  inner join dept_manager dm 
+ON e.emp_no = dm.emp_no
+GROUP BY e.gender;
+
+--  Average salary of employees by each department
+SELECT d.dept_name, AVG(s.salary)       FROM departments d  inner join dept_emp de 
+ON d.dept_no = de.dept_no
+inner join salaries s 
+ON s.emp_no = de.emp_no
+GROUP BY d.dept_no
+ORDER BY 2 DESC;
+
+
+
+-- the information of department managers who were hired between the 1st of January 1990 and the 1st of January 1995
+SELECT *  FROM dept_manager
+WHERE emp_no IN (
+	SELECT emp_no FROM employees
+    WHERE hire_date BETWEEN '1990-01-01' AND '1995-01-01'
+);
+
+
+
+
+-- [01] Breakdown between the male and female employees working in the company each year, starting from 1990
+
+SELECT 
+    DATE_FORMAT(d.from_date,"%Y") AS calender_year,
+    CASE
+		WHEN e.gender = "M" THEN "Male"
+        ELSE "Female"
+    END AS gender,
+    COUNT(e.gender) AS number_of_employees
+FROM employees e
+JOIN dept_emp d ON e.emp_no = d.emp_no
+GROUP BY 1,2
+HAVING calender_year >= 1990
+ORDER BY 1,2;
+
+
+
+
+-- [02] Compare avg salary of female vs male in company until year 2002. And add a filter following you to see that per each department.
+-- [02] male_vs_female_average_salary_across_years
+
+SELECT e.gender, d.dept_name, ROUND(AVG(s.salary)) as "Avg Salary", YEAR(s.from_date) AS calendar_year
+FROM employees e
+JOIN dept_emp de ON de.emp_no = e.emp_no
+JOIN departments d ON d.dept_no = de.dept_no
+JOIN salaries s ON s.emp_no = e.emp_no
+GROUP BY d.dept_no, e.gender, calendar_year
+HAVING calendar_year <=2002
+ORDER BY d.dept_no;
+
+
+--  Ek sath all data
+-- 	SELECT e.*,de.*,d.*,s.*
+-- 	FROM employees e
+-- 	JOIN dept_emp de ON de.emp_no = e.emp_no
+-- 	JOIN departments d ON d.dept_no = de.dept_no
+-- 	JOIN salaries s ON s.emp_no = e.emp_no;
+
+
+-- [03] department wise salary
+select d.dept_name,round(avg(s.salary)) as "Avg Salary"
+from salaries s inner join dept_emp de
+on s.emp_no=de.emp_no 
+inner join departments d
+on de.dept_no=d.dept_no
+group by d.dept_no;
+
+
+--  [04] Number of manager per department
+select d.dept_name,count(dm.emp_no) as "No. of Manager"
+from dept_manager dm inner join departments d
+on dm.dept_no=d.dept_no
+group by d.dept_no;
+
+
+-- [05] Number of employee per department
+select d.dept_name,count(de.emp_no) as "No. of Employees"
+from dept_emp de inner join departments d
+on de.dept_no=d.dept_no
+group by d.dept_no;
